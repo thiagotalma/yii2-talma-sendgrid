@@ -103,7 +103,7 @@ class Mailer extends BaseMailer
      *
      * @return bool
      */
-    protected function isResponseOk(Response $response)
+    public function isResponseOk(Response $response)
     {
         return $response->statusCode() >= 200 && $response->statusCode() < 300;
     }
