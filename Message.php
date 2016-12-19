@@ -256,18 +256,26 @@ class Message extends BaseMessage
     /**
      * Add categories to message
      *
-     * @param array $categories Categories to be added
+     * @param array|string $categories Categories to be added
      *
      * @return $this
      */
-    public function addCategories(array $categories = [])
+    public function addCategories($categories)
     {
-        foreach ($categories as $category) {
-            if (!empty($this->getSendGridMessage()->categories) && in_array($category, $this->getSendGridMessage()->categories)) {
-                continue;
-            }
+        $addedCategories = $this->getSendGridMessage()->categories;
 
-            $this->getSendGridMessage()->addCategory($category);
+        if (is_array($categories)) {
+            foreach ($categories as $category) {
+                if (!empty($addedCategories) && in_array($category, $addedCategories)) {
+                    continue;
+                }
+
+                $this->getSendGridMessage()->addCategory($category);
+            }
+        } elseif (is_string($categories)) {
+            if (empty($addedCategories) || !in_array($categories, $addedCategories)) {
+                $this->getSendGridMessage()->addCategory($categories);
+            }
         }
 
         return $this;
