@@ -344,4 +344,13 @@ class Message extends BaseMessage
         $email = new Email($name, $address);
         $this->getPersonalization()->$addFunction($email);
     }
+
+    /**
+     * @param string $key
+     * @param string $value
+     */
+    public function addCustomArg($key, $value)
+    {
+        $this->getPersonalization()->addCustomArg($key, $value);
+    }
 }
